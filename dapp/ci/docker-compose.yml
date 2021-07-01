@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  multisigwallet:
+    build:
+      context: ..
+      dockerfile: ./ci/Dockerfile
+    image: multisigwallet
+    container_name: multisigwallet
+    network_mode: "host"
+    ports:
+      - "127.0.0.1:8282:8282/tcp"
+
