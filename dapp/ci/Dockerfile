@@ -38,10 +38,17 @@ COPY --chown=user:user ./Gruntfile.js /home/user/multisigwallet/
 COPY --chown=user:user ./Readme.md /home/user/multisigwallet/
 COPY --chown=user:user ./config.karma.js /home/user/multisigwallet/
 COPY --chown=user:user ./package.json /home/user/multisigwallet/
+# If file is present, npm complains about one of dependencies.
+# File as recreated by npm is identical to one in repo. Go figure.
+# COPY --chown=user:user ./package-lock.json /home/user/multisigwallet/
 COPY --chown=user:user ./testrpc.sh /home/user/multisigwallet/
 
 RUN npm install grunt-cli
 RUN npm install .
+
+# verify if generated package-lock.json and one in repo are identical
+COPY --chown=user:user ./package-lock.json /home/user/multisigwallet/test.json
+RUN diff test.json package-lock.json
 
 EXPOSE 8282
 
